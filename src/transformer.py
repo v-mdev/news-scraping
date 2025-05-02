@@ -1,6 +1,7 @@
 import polars as pl
 from transformers import AutoTokenizer, AutoModel
 import torch
+from prefect import task
 
 news_category = [
     "Política",
@@ -9,7 +10,6 @@ news_category = [
     "Tecnología",
     "Salud",
     "Ciencia",
-    "Entretenimiento",
     "Cultura",
     "Internacional",
     "Sociedad",
@@ -22,6 +22,7 @@ news_category = [
 tokenizer = AutoTokenizer.from_pretrained('sentence-transformers/all-MiniLM-L6-v2')
 model = AutoModel.from_pretrained('sentence-transformers/all-MiniLM-L6-v2')
 
+@task
 def get_news_category_embeddings():
     # Tokenize sentences
     encoded_input = tokenizer(news_category, padding=True, truncation=True, return_tensors='pt')
@@ -32,4 +33,4 @@ def get_news_category_embeddings():
 
     # Extract CLS token embeddings
     news_category_embeddings = model_output[0][:, 0, :]
-    return news_category_embeddings
+    return list(zip(news_category_embeddings, news_category))

@@ -4,6 +4,7 @@ import time
 from dateutil import parser
 from datetime import date, datetime
 import polars as pl
+from prefect import task
 
 from bs4 import BeautifulSoup
 
@@ -64,21 +65,23 @@ def web_scrapping(url, news_number):
 
     return df
 
-
-with ThreadPoolExecutor() as executor:
-    future_to_url = {executor.submit(load_url, url): url for url in list(urls.keys())}
-    df = pl.DataFrame({})
-    for future in as_completed(future_to_url):
-        url = future_to_url[future]
-        try:
-            df = pl.concat(
-                [
-                    df,
-                    web_scrapping(url, 1),
-                ],
-                how="vertical",
-            )
-        except Exception as e:
-            print(f"Error al procesar {url}: {e}")
-    print(df)
-    df.write_csv("news.csv")
+@task
+def process_urls(urls):
+    with ThreadPoolExecutor() as executor:
+        future_to_url = {executor.submit(load_url, url): url for url in list(urls.keys())}
+        df = pl.DataFrame({})
+        for future in as_completed(future_to_url):
+            url = future_to_url[future]
+            try:
+                df = pl.concat(
+                    [
+                        df,
+                        web_scrapping(url, 1),
+                    ],
+                    how="vertical",
+                )
+            except Exception as e:
+                print(f"Error al procesar {url}: {e}")
+        
+        df.write_csv("news.csv")
+    return df
