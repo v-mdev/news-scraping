@@ -7,5 +7,7 @@ requires-python = ">=3.10"
 dependencies = [
     "bs4>=0.0.2",
     "pandas>=2.2.3",
+    "pymilvus>=2.5.8",
     "selenium>=4.31.0",
+    "sentence-transformers>=4.1.0",
 ]
