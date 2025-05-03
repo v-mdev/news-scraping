@@ -76,7 +76,7 @@ def process_urls(urls):
                 df = pl.concat(
                     [
                         df,
-                        web_scrapping(url, 1),
+                        web_scrapping(url, 5),
                     ],
                     how="vertical",
                 )

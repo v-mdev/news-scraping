@@ -10,7 +10,7 @@ def search(title_embeddings):
     requests = [
         SearchRequest(
             vector=embedding,
-            limit=2,  # Number of results to return
+            limit=1,  # Number of results to return
             with_payload=True,  # Include metadata in the results
         )
         for embedding in title_embeddings
