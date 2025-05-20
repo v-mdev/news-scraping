@@ -17,8 +17,8 @@ def load_url(url: str) -> str:
 
 urls = {
     "https://www.abc.es/": ["time", "datetime", "ABC"],
-    "https://elpais.com/": ["a", "data-date", "El Mundo"],
-    "https://www.elmundo.es/": ["time", "datetime", "El País"]
+    "https://elpais.com/": ["a", "data-date", "El País"],
+    "https://www.elmundo.es/": ["time", "datetime", "El Mundo"]
 }
 
 
@@ -76,7 +76,7 @@ def process_urls(urls):
                 df = pl.concat(
                     [
                         df,
-                        web_scrapping(url, 5),
+                        web_scrapping(url, 1),
                     ],
                     how="vertical",
                 )
@@ -85,3 +85,5 @@ def process_urls(urls):
         
         df.write_csv("news.csv")
     return df
+
+process_urls(urls)

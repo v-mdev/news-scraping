@@ -1,4 +1,5 @@
 from prefect import flow
+from docker_utils import start_qdrant
 from extract import process_urls, urls
 from transformer import get_news_category_embeddings
 from load_emb import create_collection_if_not_exists, insert_embeddings
@@ -8,6 +9,8 @@ from search import search
 
 @flow
 def pipeline():
+    start_qdrant()
+
     process_urls(urls)
     news_embeddings = get_news_category_embeddings()
 
