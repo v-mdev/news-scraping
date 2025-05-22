@@ -1,6 +1,7 @@
 # News Orchestration
 This project manages and automates news data workflows. It collects news article titles and classifies them into categories using embeddings and vector search.
 
+> **Note:** This project is not finished and is currently under active development.
 ## Project Overview
 
 This repository provides all the code and configuration to:
