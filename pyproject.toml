@@ -1,15 +1,10 @@
 [project]
 name = "news-orchestration"
 version = "0.1.0"
-description = "Add your description here"
-readme = "README.md"
-requires-python = ">=3.10"
 dependencies = [
-    "bs4>=0.0.2",
-    "docker>=7.1.0",
-    "pandas>=2.2.3",
-    "polars>=1.29.0",
-    "prefect>=3.3.7",
-    "selenium>=4.31.0",
-    "sentence-transformers>=4.1.0",
+    "numpy>=2.2.6",
+    "polars>=1.30.0",
+    "prefect>=3.4.2",
+    "qdrant-client>=1.14.2",
+    "torch>=2.7.0",
 ]
